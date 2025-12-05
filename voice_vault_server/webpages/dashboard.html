@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Voice Vault Dashboard</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 0 12px;
+      background: #f5f5f5;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 18px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      padding: 12px 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    }
+    .locked {
+      color: #b00020;
+      font-weight: bold;
+    }
+    .unlocked {
+      color: #0a7a0a;
+      font-weight: bold;
+    }
+    .small {
+      font-size: 0.9em;
+      color: #555;
+    }
+    code {
+      background: #eee;
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+    input[type="text"],
+    input[type="password"] {
+      padding: 4px 6px;
+      font-size: 0.95em;
+      margin-left: 4px;
+    }
+    button {
+      padding: 4px 10px;
+      font-size: 0.95em;
+      margin-top: 6px;
+      cursor: pointer;
+    }
+    ul.flash-list {
+      list-style: none;
+      padding-left: 0;
+    }
+    ul.flash-list li {
+      padding: 6px 8px;
+      margin-bottom: 4px;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+    .flash-success { background: #e7f6e7; color: #135c13; border: 1px solid #c4e3c4; }
+    .flash-danger  { background: #fde2e2; color: #7b1111; border: 1px solid #f5bcbc; }
+    .flash-warning { background: #fff5d7; color: #7b5a00; border: 1px solid #f1dc9a; }
+    .flash-info    { background: #e5f1ff; color: #114d7b; border: 1px solid #c0dcff; }
+  </style>
+</head>
+<body>
+  <h1>Voice Vault</h1>
+
+  <!-- Flash messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <ul class="flash-list">
+        {% for category, msg in messages %}
+          {% set css_class = 'flash-' + category %}
+          <li class="{{ css_class }}">{{ msg }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+
+  <!-- Admin login / status -->
+  <div class="card">
+    {% if not is_admin %}
+      <h2>Admin Login</h2>
+      <form method="post">
+        <input type="hidden" name="action" value="admin_login">
+        <label>
+          Password:
+          <input type="password" name="password" required>
+        </label>
+        <br>
+        <button type="submit">Login</button>
+      </form>
+    {% else %}
+      <h2>Admin</h2>
+      <p>You are logged in as admin.</p>
+      <form method="post" style="display:inline;">
+        <input type="hidden" name="action" value="admin_logout">
+        <button type="submit">Logout</button>
+      </form>
+    {% endif %}
+  </div>
+
+  <!-- Enrollment (only for admin) -->
+  {% if is_admin %}
+  <div class="card">
+    <h2>Enroll User</h2>
+    <form method="post">
+      <input type="hidden" name="action" value="enroll_user">
+      <label>
+        Username:
+        <input type="text" name="username" required>
+      </label>
+      <br>
+      <button type="submit">Create / Enroll</button>
+    </form>
+
+    {% if enroll_username %}
+      <hr>
+      <p>Enrolling user: <strong>{{ enroll_username }}</strong></p>
+      <p>Please have them read this script while recording on the Raspberry Pi:</p>
+      <blockquote>{{ enrollment_script }}</blockquote>
+      <p class="small">
+        On the Raspberry Pi, run:<br>
+        <code>python3 pi_client.py enroll {{ enroll_username }} --server {{ server_url }}</code>
+      </p>
+    {% endif %}
+
+    {% if users %}
+      <p class="small">
+        <strong>Existing users:</strong>
+        {{ users|join(", ") }}
+      </p>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <!-- Vault status -->
+  <div class="card">
+    <h2>Vault Status</h2>
+    {% if is_unlocked %}
+      <p class="unlocked">UNLOCKED</p>
+      <p>Recognized user: <strong>{{ recognized_user }}</strong></p>
+      <p>Distance: {{ distance }}</p>
+    {% else %}
+      <p class="locked">LOCKED</p>
+      {% if recognized_user %}
+        <p>Last attempt: recognized <strong>{{ recognized_user }}</strong> but distance was {{ distance }} (above threshold).</p>
+      {% elif distance is not none %}
+        <p>Last attempt: unknown speaker (distance {{ distance }}).</p>
+      {% else %}
+        <p>No authentication attempts yet.</p>
+      {% endif %}
+    {% endif %}
+
+    <p class="small">
+      To attempt unlock, on the Raspberry Pi run:<br>
+      <code>python3 pi_client.py auth --server {{ server_url }}</code><br>
+      then refresh this page.
+    </p>
+  </div>
+
+  <!-- Secrets (only when unlocked) -->
+  {% if is_unlocked %}
+  <div class="card">
+    <h2>Secrets</h2>
+    <p><strong>Global secret:</strong> {{ global_secret }}</p>
+    <p><strong>Secret for {{ recognized_user }}:</strong> {{ user_secret }}</p>
+  </div>
+  {% endif %}
+</body>
+</html>

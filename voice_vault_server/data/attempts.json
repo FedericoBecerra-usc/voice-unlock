@@ -1,0 +1,79 @@
+[
+  {
+    "timestamp": "2025-12-05 12:17:44",
+    "recognized_user": "federico",
+    "distance": 0.00464731673660379,
+    "success": true,
+    "audio_path": "/Users/fedebecerra/voice-unlock/voice_vault_server/data/audio_samples/auth_20251205_121744.wav"
+  },
+  {
+    "timestamp": "2025-12-05 12:18:40",
+    "recognized_user": "pablo",
+    "distance": 0.004515172707343251,
+    "success": true,
+    "audio_path": "/Users/fedebecerra/voice-unlock/voice_vault_server/data/audio_samples/auth_20251205_121840.wav"
+  },
+  {
+    "timestamp": "2025-12-05 12:19:08",
+    "recognized_user": "pablo",
+    "distance": 0.024395926805066526,
+    "success": true,
+    "audio_path": "/Users/fedebecerra/voice-unlock/voice_vault_server/data/audio_samples/auth_20251205_121908.wav"
+  },
+  {
+    "timestamp": "2025-12-05 12:19:52",
+    "recognized_user": "federico",
+    "distance": 0.007431849384862854,
+    "success": true,
+    "audio_path": "/Users/fedebecerra/voice-unlock/voice_vault_server/data/audio_samples/auth_20251205_121952.wav"
+  },
+  {
+    "timestamp": "2025-12-05 15:15:13",
+    "recognized_user": "federico",
+    "distance": 0.016552661826601756,
+    "success": false,
+    "audio_path": "/Users/fedebecerra/voice-unlock/voice_vault_server/data/audio_samples/auth_20251205_151512.wav"
+  },
+  {
+    "timestamp": "2025-12-05 15:15:56",
+    "recognized_user": "federico",
+    "distance": 0.014135292801376709,
+    "success": false,
+    "audio_path": "/Users/fedebecerra/voice-unlock/voice_vault_server/data/audio_samples/auth_20251205_151556.wav"
+  },
+  {
+    "timestamp": "2025-12-05 15:27:37",
+    "recognized_user": "pablo",
+    "distance": 0.023368493060620832,
+    "success": false,
+    "audio_path": "/Users/fedebecerra/voice-unlock/voice_vault_server/data/audio_samples/auth_20251205_152737.wav"
+  },
+  {
+    "timestamp": "2025-12-05 15:27:56",
+    "recognized_user": "federico",
+    "distance": 0.012869315736258713,
+    "success": false,
+    "audio_path": "/Users/fedebecerra/voice-unlock/voice_vault_server/data/audio_samples/auth_20251205_152756.wav"
+  },
+  {
+    "timestamp": "2025-12-05 15:32:48",
+    "recognized_user": "federico",
+    "distance": 0.01935772707227501,
+    "success": false,
+    "audio_path": "/Users/fedebecerra/voice-unlock/voice_vault_server/data/audio_samples/auth_20251205_153248.wav"
+  },
+  {
+    "timestamp": "2025-12-05 15:33:11",
+    "recognized_user": "ari",
+    "distance": 0.008817193810315316,
+    "success": true,
+    "audio_path": "/Users/fedebecerra/voice-unlock/voice_vault_server/data/audio_samples/auth_20251205_153311.wav"
+  },
+  {
+    "timestamp": "2025-12-05 15:47:19",
+    "recognized_user": "ari",
+    "distance": 0.02898718377500198,
+    "success": false,
+    "audio_path": "/Users/fedebecerra/voice-unlock/voice_vault_server/data/audio_samples/auth_20251205_154719.wav"
+  }
+]
